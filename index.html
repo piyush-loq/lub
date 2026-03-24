@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Something Special</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #1a0a1a;
+            --accent-pink: #ff4d6d;
+            --glow-pink: rgba(255, 77, 109, 0.4);
+            --glass: rgba(255, 255, 255, 0.05);
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: var(--bg-color);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Animated Stars Background */
+        #stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: twinkle var(--duration) infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Container & Glassmorphism */
+        .card {
+            position: relative;
+            z-index: 10;
+            width: 90%;
+            max-width: 450px;
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .hidden { display: none !important; }
+
+        /* Typography */
+        h1 { font-family: 'Playfair Display', serif; font-size: 2.2rem; margin-bottom: 0.5rem; color: #ff8fa3; }
+        h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 1rem; }
+        p { color: #ccc; font-size: 0.95rem; line-height: 1.6; }
+
+        /* Images/GIFs */
+        .cat-img { width: 120px; height: 120px; margin-bottom: 1.5rem; border-radius: 20px; }
+
+        /* Buttons */
+        .btn {
+            background: linear-gradient(45deg, #ff4d6d, #c9184a);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px var(--glow-pink);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin: 10px;
+        }
+
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px var(--glow-pink); }
+        
+        .btn-secondary { background: #444; box-shadow: none; }
+
+        /* Carousel Styles */
+        .carousel {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .carousel-img {
+            width: 200px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 15px;
+            border: 2px solid var(--accent-pink);
+        }
+        .nav-btn {
+            background: none; border: 1px solid white; color: white;
+            border-radius: 50%; width: 30px; height: 30px; cursor: pointer;
+        }
+
+        /* Letter Styling */
+        .letter {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.2rem;
+            text-align: left;
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        /* Modal-like appearance for "Just Say YES" */
+        .overlay-card { border: 2px solid var(--accent-pink); }
+
+    </style>
+</head>
+<body>
+
+    <div id="stars-container"></div>
+
+    <div id="stage0" class="card">
+        <img src="images/photo 1.webp" class="cat-img">
+        <h1>I have something special to tell you...</h1>
+        <p>Something that will change everything ✨</p>
+        <button class="btn" onclick="goTo(1)">❤️ Tap to Begin</button>
+    </div>
+
+    <div id="stage1" class="card hidden">
+        <img src="images/photo 2.webp" class="cat-img">
+        <h2>Be honest with me...</h2>
+        <p>This is important to me 💕</p>
+        <h3 style="color:var(--accent-pink)">Do you trust me?</h3>
+        <button class="btn" onclick="goTo(2)">Yes, I do! 🌸</button>
+        <button class="btn btn-secondary" id="no1" onmouseover="moveBtn('no1')">No ☹️</button>
+    </div>
+
+    <div id="stage2" class="card hidden">
+        <img src="images/photo 3.webp" class="cat-img">
+        <h2>One more thing...</h2>
+        <p>I need to know this 👇</p>
+        <h3 style="color:var(--accent-pink)">Do you also love me?</h3>
+        <button class="btn" onclick="goTo(3)">Yes, I love you! ❤️</button>
+        <button class="btn btn-secondary" id="no2" onmouseover="moveBtn('no2')">No ☹️</button>
+    </div>
+
+    <div id="stage3" class="card hidden">
+        <img src="images/photo 4.webp" class="cat-img">
+        <h2>Last question, I promise!</h2>
+        <p>This one is the most important 🌟</p>
+        <h3 style="color:var(--accent-pink)">Will you be mine forever?</h3>
+        <button class="btn" onclick="goTo(5)">Yes, forever! ❤️</button>
+        <button class="btn btn-secondary" onclick="goTo(4)">Let me think... 🤔</button>
+    </div>
+
+    <div id="stage4" class="card hidden overlay-card">
+        <img src="images/photo 5.webp" class="cat-img" style="width:80px; height:80px;">
+        <h2>Just Say YES! 💕</h2>
+        <p>Come on, don't make me wait! You know deep down in your heart that you want to say yes. Let's make this moment magical together!</p>
+        <button class="btn" onclick="goTo(5)">💖 Yes, I'll say YES! 💖</button>
+    </div>
+
+    <div id="stage5" class="card hidden">
+        <h1>From the first day I met you, life became brighter...</h1>
+        <p>You've made every moment so special! ❤️</p>
+        <div class="carousel">
+            <button class="nav-btn" onclick="prevImg()">❮</button>
+            <img id="gallery" src="https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?q=80&w=500" class="carousel-img">
+            <button class="nav-btn" onclick="nextImg()">❯</button>
+        </div>
+        <p>Now for the most important part...</p>
+        <button class="btn" onclick="goTo(6)">💖 See My Message 💖</button>
+    </div>
+
+    <div id="stage6" class="card hidden">
+        <img src="images/photo 6.webp" class="cat-img">
+        <h2>My Dearest Love Aaru,</h2>
+        <div class="letter">
+            From the moment I met you, my world changed forever. Your smile lights up my darkest days, and your laughter is the sweetest melody I've ever heard.<br><br>
+            Every moment with you feels like a beautiful dream I never want to wake up from. You've shown me what true love means, and I'm grateful for every second we share.<br><br>
+            You are my best friend, my soulmate, and my everything. I can't imagine my life without you in it. In your eyes, I found my home. I love you in ways words could never express.
+        </div>
+        <p style="margin-top:15px; font-weight:bold;">Forever Yours ❤️</p>
+    </div>
+
+    <script>
+        // 1. Generate Stars
+        const container = document.getElementById('stars-container');
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.width = Math.random() * 3 + 'px';
+            star.style.height = star.style.width;
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.setProperty('--duration', Math.random() * 3 + 2 + 's');
+            container.appendChild(star);
+        }
+
+        // 2. Navigation Logic
+        function goTo(stage) {
+            document.querySelectorAll('.card').forEach(card => card.classList.add('hidden'));
+            document.getElementById('stage' + stage).classList.remove('hidden');
+        }
+
+        // 3. Running "No" Button
+        function moveBtn(id) {
+            const btn = document.getElementById(id);
+            const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+            btn.style.position = 'fixed';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+        }
+
+        // 4. Carousel Logic
+        const images = [
+            "https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?q=80&w=500", // Replace with your photos
+            
+            "https://images.unsplash.com/photo-1494774157365-9e04c6720e47?q=80&w=500"
+        ];
+        let currentImg = 0;
+        function nextImg() {
+            currentImg = (currentImg + 1) % images.length;
+            document.getElementById('gallery').src = images[currentImg];
+        }
+        function prevImg() {
+            currentImg = (currentImg - 1 + images.length) % images.length;
+            document.getElementById('gallery').src = images[currentImg];
+        }
+    </script>
+</body>
+</html>
